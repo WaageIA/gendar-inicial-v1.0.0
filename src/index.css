@@ -1,0 +1,106 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 24 25% 97%; /* Warm off-white */
+    --foreground: 331 10% 33%; /* Dark Plum/Brown */
+
+    --card: 0 0% 100%;
+    --card-foreground: 331 10% 33%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 331 10% 33%;
+
+    --primary: 340 44% 69%; /* Dusty Rose */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 340 33% 92%; /* Powder Pink */
+    --secondary-foreground: 340 44% 69%;
+
+    --muted: 340 33% 92%;
+    --muted-foreground: 331 21% 60%; /* Muted Mauve */
+
+    --accent: 331 21% 90%;
+    --accent-foreground: 331 21% 60%;
+
+    --destructive: 4 60% 61%; /* Coral Red */
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 340 33% 88%;
+    --input: 340 33% 88%;
+    --ring: 340 44% 69%;
+
+    --radius: 0.5rem;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    /* Melhoria para mobile - evita zoom em inputs */
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  .nail-card {
+    @apply border border-nail-secondary rounded-lg p-3 sm:p-4 bg-white shadow-sm hover:shadow-md transition-shadow duration-200;
+  }
+  
+  .nail-button {
+    @apply bg-nail-primary hover:bg-nail-dark text-white rounded-md px-3 py-2 sm:px-4 sm:py-2 transition-colors min-h-[44px] flex items-center justify-center font-medium;
+  }
+  
+  .nail-secondary-button {
+    @apply bg-nail-secondary hover:bg-nail-accent text-nail-dark rounded-md px-3 py-2 sm:px-4 sm:py-2 transition-colors min-h-[44px] flex items-center justify-center font-medium;
+  }
+  
+  .nail-input {
+    @apply border border-nail-secondary rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-nail-primary min-h-[44px] text-base;
+  }
+  
+  .interactive-card {
+    @apply transform transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer;
+    /* Melhoria mobile - área de toque mais responsiva */
+    touch-action: manipulation;
+  }
+  
+  .stat-card {
+    @apply p-3 sm:p-4 rounded-lg border border-nail-secondary bg-white shadow-sm hover:shadow-md transition-all;
+  }
+
+  /* Novas classes mobile-first */
+  .mobile-touch-target {
+    @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
+  }
+
+  .mobile-card {
+    @apply rounded-xl border border-nail-secondary bg-white shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden;
+  }
+
+  .mobile-button-primary {
+    @apply bg-nail-primary hover:bg-nail-dark active:bg-nail-dark text-white rounded-lg px-4 py-3 font-semibold text-sm transition-all duration-200 min-h-[48px] shadow-sm hover:shadow-md active:scale-[0.98];
+    touch-action: manipulation;
+  }
+
+  .mobile-button-secondary {
+    @apply bg-white hover:bg-nail-light border border-nail-secondary text-nail-dark rounded-lg px-4 py-3 font-medium text-sm transition-all duration-200 min-h-[48px] shadow-sm hover:shadow-md active:scale-[0.98];
+    touch-action: manipulation;
+  }
+
+  .mobile-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6;
+  }
+
+  .mobile-spacing {
+    @apply space-y-4 sm:space-y-6;
+  }
+
+  .mobile-text-hierarchy {
+    @apply text-sm sm:text-base leading-relaxed;
+  }
+}
