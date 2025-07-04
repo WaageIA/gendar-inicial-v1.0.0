@@ -39,29 +39,18 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       {/* Header otimizado para mobile */}
       <header className={cn(
         "bg-white border-b-2 border-nail-secondary sticky top-0 z-40 shadow-sm",
-        isMobile ? "h-12" : "h-16"
+        isMobile ? "h-8" : "h-24"
       )}>
         <div className="container mx-auto px-3 sm:px-4 h-full flex justify-between items-center">
-          <Link to="/" className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
+          <Link to="/" className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1 h-full">
             <img 
-              alt="Studio Anisy Candine Logo" 
+              alt="Gendar Logo" 
               className={cn(
-                "w-auto object-contain",
-                isMobile ? "h-8" : "h-12"
+                "w-auto h-20 sm:h-36 object-contain",
+                isMobile ? "h-20" : "h-24"
               )} 
-              src="/lovable-uploads/a50724cd-7f7b-44c3-be46-77a700b2405f.png" 
+              src="/logo-new-gendar.png" 
             />
-            <div className="flex flex-col min-w-0">
-              <span className={cn(
-                "font-bold gold-text truncate",
-                isMobile ? "text-sm" : "text-xl"
-              )}>
-                {isMobile ? "Studio A.C." : "Studio Anisy Candine"}
-              </span>
-              {!isMobile && (
-                <span className="text-xs text-nail-accent">Especialista em Molde F1</span>
-              )}
-            </div>
           </Link>
           
           {user && (
@@ -135,17 +124,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       {!isMobile && (
         <footer className="bg-white border-t border-nail-secondary py-4 sm:py-6">
           <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-            <div className="flex justify-center items-center mb-2 sm:mb-3">
-              <img 
-                alt="Studio Anisy Candine Logo" 
-                className="h-6 sm:h-8 w-auto mr-2 sm:mr-3" 
-                src="/lovable-uploads/e0fd7b6c-c6ff-4fbf-9255-ec8ae8967ec7.png" 
-              />
-              <div className="text-left">
-                <div className="font-semibold text-nail-dark text-sm">Studio Anisy Candine</div>
-                <div className="text-xs text-nail-accent">Agendamentos simples, atendimentos incríveis</div>
-              </div>
-            </div>
             &copy; {new Date().getFullYear()} Gendar. Todos os direitos reservados.
           </div>
         </footer>

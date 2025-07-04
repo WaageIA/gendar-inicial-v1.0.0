@@ -64,11 +64,11 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				nail: {
-					primary: '#D48DA4',
-					secondary: '#F1E4E8',
-					accent: '#B08397',
-					light: '#FAF7F5',
-					dark: '#5C4B51'
+					primary: 'hsl(var(--primary))',
+					secondary: 'hsl(var(--muted))',
+					accent: 'hsl(var(--secondary))',
+					light: 'hsl(var(--background))',
+					dark: 'hsl(var(--foreground))'
 				}
 			},
 			borderRadius: {

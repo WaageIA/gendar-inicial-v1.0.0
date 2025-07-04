@@ -5,33 +5,33 @@
 
 @layer base {
   :root {
-    --background: 24 25% 97%; /* Warm off-white */
-    --foreground: 331 10% 33%; /* Dark Plum/Brown */
+    --background: 200 50% 98%;      /* branco gelo */
+    --foreground: 194 41% 31%;      /* azul petróleo claro */
 
     --card: 0 0% 100%;
-    --card-foreground: 331 10% 33%;
+    --card-foreground: 194 41% 31%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 331 10% 33%;
+    --popover-foreground: 194 41% 31%;
 
-    --primary: 340 44% 69%; /* Dusty Rose */
+    --primary: 197 45% 40%;         /* azul médio */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 340 33% 92%; /* Powder Pink */
-    --secondary-foreground: 340 44% 69%;
+    --secondary: 194 41% 31%;       /* azul petróleo claro */
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 340 33% 92%;
-    --muted-foreground: 331 21% 60%; /* Muted Mauve */
+    --muted: 203 43% 93%;           /* cinza azulado */
+    --muted-foreground: 194 41% 31%;
 
-    --accent: 331 21% 90%;
-    --accent-foreground: 331 21% 60%;
+    --accent: 203 43% 93%;           /* cinza azulado */
+    --accent-foreground: 194 41% 31%;
 
-    --destructive: 4 60% 61%; /* Coral Red */
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 45 87% 62%;      /* amarelo suave */
+    --destructive-foreground: 194 41% 31%;
 
-    --border: 340 33% 88%;
-    --input: 340 33% 88%;
-    --ring: 340 44% 69%;
+    --border: 203 43% 93%;          /* cinza azulado */
+    --input: 203 43% 93%;           /* cinza azulado */
+    --ring: 197 45% 40%;            /* azul médio */
 
     --radius: 0.5rem;
   }
