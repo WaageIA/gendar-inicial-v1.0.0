@@ -52,7 +52,7 @@ const AppointmentCalendar: React.FC<AppointmentCalendarProps> = ({
               highlighted: {
                 fontWeight: 'bold',
                 textDecoration: 'underline',
-                color: '#D4AF37'
+                color: 'hsl(var(--calendar-indicator))'
               }
             }}
           />

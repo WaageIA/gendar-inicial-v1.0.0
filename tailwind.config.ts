@@ -37,6 +37,12 @@ export default {
 					DEFAULT: 'hsl(var(--destructive))',
 					foreground: 'hsl(var(--destructive-foreground))'
 				},
+				completed: {
+					DEFAULT: 'hsl(var(--completed))'
+				},
+				'calendar-indicator': {
+					DEFAULT: 'hsl(var(--calendar-indicator))'
+				},
 				muted: {
 					DEFAULT: 'hsl(var(--muted))',
 					foreground: 'hsl(var(--muted-foreground))'

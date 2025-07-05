@@ -22,9 +22,9 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const getStatusBadge = () => {
     if (appointment.status === 'completed') {
-      return <Badge className="bg-green-500 text-white">Concluído</Badge>;
+      return <Badge className="bg-completed text-white">Concluído</Badge>;
     } else if (appointment.status === 'cancelled') {
-      return <Badge className="bg-red-500 text-white">Cancelado</Badge>;
+      return <Badge className="bg-destructive text-white">Cancelado</Badge>;
     }
     return <Badge className="bg-nail-primary text-white">Agendado</Badge>;
   };
@@ -78,7 +78,7 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
           <Button size="sm" variant="destructive" onClick={e => {
           e.stopPropagation();
           onDeleteClick(appointment);
-        }} className="bg-red-700 hover:bg-red-600 text-xs">
+        }} className="bg-destructive hover:bg-destructive/80 text-xs">
             <Trash2 className="w-3.5 h-3.5 mr-1" /> 
             Excluir
           </Button>
@@ -88,14 +88,14 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
             <Button size="sm" variant="outline" onClick={e => {
           e.stopPropagation();
           onCancelClick(appointment);
-        }} className="text-xs text-red-600 border-red-200 hover:bg-red-50 font-thin text-center">
+        }} className="text-xs text-destructive border-destructive/20 hover:bg-destructive/10 font-thin text-center">
               <XCircle className="w-3.5 h-3.5 mr-1" /> 
               Cancelar
             </Button>
             <Button size="sm" onClick={e => {
           e.stopPropagation();
           onCompleteClick(appointment);
-        }} className="text-xs bg-green-500 hover:bg-green-600 text-white">
+        }} className="text-xs bg-completed hover:bg-completed/80 text-white">
               <CheckCircle className="w-3.5 h-3.5 mr-1" /> 
               Concluir
             </Button>

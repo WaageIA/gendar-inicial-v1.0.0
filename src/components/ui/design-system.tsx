@@ -9,9 +9,9 @@ import { cn } from '@/lib/utils';
 export const colorVariants = {
   primary: 'bg-nail-primary text-white',
   secondary: 'bg-nail-secondary text-nail-dark',
-  success: 'bg-green-500 text-white',
+  success: 'bg-completed text-white',
   warning: 'bg-yellow-500 text-white',
-  danger: 'bg-red-500 text-white',
+  danger: 'bg-destructive text-white',
   info: 'bg-blue-500 text-white',
 } as const;
 

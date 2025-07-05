@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card';
@@ -60,9 +59,8 @@ const Login: React.FC = () => {
     <div className="min-h-screen bg-nail-light flex flex-col justify-center items-center p-4">
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">
-          <img src="/logo.png" alt="Studio Anisy Candine Logo" className="h-20 mx-auto mb-4" />
-          <h1 className="text-2xl font-bold text-nail-dark">Studio Anisy Candine</h1>
-          <p className="text-nail-accent text-sm mt-1">Agendamentos simples, atendimentos incríveis</p>
+          <img src="/logo-gendar-login.png" alt="Studio Anisy Candine Logo" className="h-24 mx-auto mb-1" />
+          <p className="text-nail-accent text-sm">Agendamentos simples, atendimentos incríveis</p>
         </div>
         
         <Card className="nail-card">

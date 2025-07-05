@@ -151,7 +151,7 @@ const ClientForm: React.FC<ClientFormProps> = ({
           value={formData.name}
           onChange={(e) => updateFormData('name', e.target.value)}
           placeholder="Nome do cliente"
-          className={`min-h-[48px] text-base ${errors.name ? 'border-red-500' : ''}`}
+          className={`min-h-[48px] text-base ${errors.name ? 'border-destructive' : ''}`}
           style={{ fontSize: '16px' }} // Evita zoom no iOS
         />
         {errors.name && <p className="text-sm text-red-500">{errors.name}</p>}
@@ -164,10 +164,10 @@ const ClientForm: React.FC<ClientFormProps> = ({
           value={formData.phone}
           onChange={(e) => updateFormData('phone', e.target.value)}
           placeholder="(00) 00000-0000"
-          className={`min-h-[48px] text-base ${errors.phone ? 'border-red-500' : ''}`}
+          className={`min-h-[48px] text-base ${errors.phone ? 'border-destructive' : ''}`}
           style={{ fontSize: '16px' }}
         />
-        {errors.phone && <p className="text-sm text-red-500">{errors.phone}</p>}
+        {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
       </div>
 
       <div className="space-y-2">
@@ -178,10 +178,10 @@ const ClientForm: React.FC<ClientFormProps> = ({
           value={formData.email}
           onChange={(e) => updateFormData('email', e.target.value)}
           placeholder="email@exemplo.com"
-          className={`min-h-[48px] text-base ${errors.email ? 'border-red-500' : ''}`}
+          className={`min-h-[48px] text-base ${errors.email ? 'border-destructive' : ''}`}
           style={{ fontSize: '16px' }}
         />
-        {errors.email && <p className="text-sm text-red-500">{errors.email}</p>}
+        {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
       </div>
       
       <div className="space-y-2">

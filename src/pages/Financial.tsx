@@ -161,11 +161,11 @@ const Financial = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-muted-foreground mb-1">Receita Total</p>
-                    <p className="text-3xl font-bold text-green-600">{formatCurrency(summary.income)}</p>
+                    <p className="text-3xl font-bold text-completed">{formatCurrency(summary.income)}</p>
                     <p className="text-xs text-muted-foreground mt-1">Este mês</p>
                   </div>
-                  <div className="p-3 bg-green-100 rounded-full">
-                    <TrendingUp className="h-8 w-8 text-green-600" />
+                  <div className="p-3 bg-completed/20 rounded-full">
+                    <TrendingUp className="h-8 w-8 text-completed" />
                   </div>
                 </div>
               </CardContent>
@@ -176,11 +176,11 @@ const Financial = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-muted-foreground mb-1">Despesas Totais</p>
-                    <p className="text-3xl font-bold text-red-600">{formatCurrency(summary.expenses)}</p>
+                    <p className="text-3xl font-bold text-destructive">{formatCurrency(summary.expenses)}</p>
                     <p className="text-xs text-muted-foreground mt-1">Este mês</p>
                   </div>
-                  <div className="p-3 bg-red-100 rounded-full">
-                    <TrendingDown className="h-8 w-8 text-red-600" />
+                  <div className="p-3 bg-destructive/20 rounded-full">
+                    <TrendingDown className="h-8 w-8 text-destructive" />
                   </div>
                 </div>
               </CardContent>
@@ -191,13 +191,13 @@ const Financial = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-muted-foreground mb-1">Lucro Líquido</p>
-                    <p className={`text-3xl font-bold ${summary.profit >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                    <p className={`text-3xl font-bold ${summary.profit >= 0 ? 'text-completed' : 'text-destructive'}`}>
                       {formatCurrency(summary.profit)}
                     </p>
                     <p className="text-xs text-muted-foreground mt-1">Este mês</p>
                   </div>
-                  <div className={`p-3 rounded-full ${summary.profit >= 0 ? 'bg-green-100' : 'bg-red-100'}`}>
-                    <Wallet className={`h-8 w-8 ${summary.profit >= 0 ? 'text-green-600' : 'text-red-600'}`} />
+                  <div className={`p-3 rounded-full ${summary.profit >= 0 ? 'bg-completed/20' : 'bg-destructive/20'}`}>
+                    <Wallet className={`h-8 w-8 ${summary.profit >= 0 ? 'text-completed' : 'text-destructive'}`} />
                   </div>
                 </div>
               </CardContent>
@@ -333,7 +333,7 @@ const Financial = () => {
                               </p>}
                           </div>
                           <div className="text-right">
-                            <p className="font-bold text-red-600 text-lg">
+                            <p className="font-bold text-destructive text-lg">
                               -{formatCurrency(expense.amount)}
                             </p>
                           </div>
@@ -435,7 +435,7 @@ const Financial = () => {
                           <div className="space-y-2 flex-1">
                             <div className="flex items-center space-x-3">
                               <p className="font-medium text-nail-dark">{transaction.description}</p>
-                              <Badge variant={transaction.type === 'income' ? 'default' : 'destructive'} className={transaction.type === 'income' ? 'bg-green-100 text-green-800 border-green-200' : ''}>
+                              <Badge variant={transaction.type === 'income' ? 'default' : 'destructive'} className={transaction.type === 'income' ? 'bg-completed/20 text-completed border-completed/50' : ''}>
                                 {transaction.type === 'income' ? 'Receita' : 'Despesa'}
                               </Badge>
                             </div>
@@ -450,7 +450,7 @@ const Financial = () => {
                             </div>
                           </div>
                           <div className="text-right">
-                            <p className={`font-bold text-lg ${transaction.type === 'income' ? 'text-green-600' : 'text-red-600'}`}>
+                            <p className={`font-bold text-lg ${transaction.type === 'income' ? 'text-completed' : 'text-destructive'}`}>
                               {transaction.type === 'income' ? '+' : '-'}{formatCurrency(transaction.amount)}
                             </p>
                           </div>

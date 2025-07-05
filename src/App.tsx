@@ -13,6 +13,7 @@ import Automation from './pages/Automation';
 import NotFound from './pages/NotFound';
 import Login from './pages/Login';
 import Settings from './pages/Settings';
+import DigitalBusinessCardSettings from './pages/DigitalBusinessCardSettings';
 import { AuthProvider } from './contexts/AuthContext';
 import { AppStateProvider } from './contexts/AppStateContext';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -70,6 +71,11 @@ function AppRoutes() {
         <Route path="/settings" element={
           <ProtectedRoute>
             <Settings />
+          </ProtectedRoute>
+        } />
+        <Route path="/settings/digital-card" element={
+          <ProtectedRoute>
+            <DigitalBusinessCardSettings />
           </ProtectedRoute>
         } />
         <Route path="/404" element={<NotFound />} />

@@ -26,7 +26,9 @@
     --accent: 203 43% 93%;           /* cinza azulado */
     --accent-foreground: 194 41% 31%;
 
-    --destructive: 45 87% 62%;      /* amarelo suave */
+    --destructive: 7 70% 60%;      /* vermelho coral */
+    --completed: 148 52% 47%;       /* verde médio */
+    --calendar-indicator: 45 87% 62%; /* amarelo suave */
     --destructive-foreground: 194 41% 31%;
 
     --border: 203 43% 93%;          /* cinza azulado */
