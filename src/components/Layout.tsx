@@ -47,16 +47,28 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const handleLogout = async () => {
     setIsLoggingOut(true);
     try {
-      await signOut();
-      navigate('/login');
-      toast.success('Logout realizado com sucesso!');
+      const result = await signOut();
+      if (result?.error) {
+        console.error('Logout error:', result.error);
+        toast.error('Erro ao fazer logout, mas você será desconectado');
+      } else {
+        toast.success('Logout realizado com sucesso!');
+      }
     } catch (error) {
       console.error('Logout error:', error);
-      toast.info('Você foi desconectado');
-      navigate('/login');
-    } finally {
-      setIsLoggingOut(false);
+      toast.error('Erro ao fazer logout, mas você será desconectado');
     }
+    
+    // Sempre navegar e resetar estado, independente do resultado
+    setIsLoggingOut(false);
+    navigate('/login', { replace: true });
+    
+    // Forçar limpeza se necessário
+    setTimeout(() => {
+      if (window.location.pathname !== '/login') {
+        window.location.href = '/login';
+      }
+    }, 100);
   };
 
   return (

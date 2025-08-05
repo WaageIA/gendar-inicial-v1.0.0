@@ -146,22 +146,60 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const refreshClients = async () => {
     dispatch({ type: 'SET_LOADING', entity: 'clients', loading: true });
     dispatch({ type: 'SET_ERROR', entity: 'clients', error: null });
+
+    // Timeout para evitar carregamento infinito
+    const timeoutId = setTimeout(() => {
+      console.warn('Timeout ao carregar clientes, usando fallback');
+      const savedClients = localStorage.getItem('nail-clients');
+      if (savedClients) {
+        try {
+          dispatch({ type: 'SET_CLIENTS', clients: JSON.parse(savedClients) });
+        } catch (e) {
+          dispatch({ type: 'SET_CLIENTS', clients: [] });
+        }
+      } else {
+        dispatch({ type: 'SET_CLIENTS', clients: [] });
+      }
+      dispatch({ type: 'SET_LOADING', entity: 'clients', loading: false });
+    }, 10000); // 10 segundos timeout
+
     try {
       const { data, error } = await clientService.getClients();
+      clearTimeout(timeoutId);
+
       if (error) {
         // Fallback to localStorage
         const savedClients = localStorage.getItem('nail-clients');
         if (savedClients) {
-          dispatch({ type: 'SET_CLIENTS', clients: JSON.parse(savedClients) });
+          try {
+            dispatch({ type: 'SET_CLIENTS', clients: JSON.parse(savedClients) });
+          } catch (e) {
+            dispatch({ type: 'SET_CLIENTS', clients: [] });
+          }
         } else {
-          throw new Error(error);
+          dispatch({ type: 'SET_CLIENTS', clients: [] });
         }
+        dispatch({ type: 'SET_ERROR', entity: 'clients', error: error });
       } else {
         dispatch({ type: 'SET_CLIENTS', clients: data });
         // Sync to localStorage
         localStorage.setItem('nail-clients', JSON.stringify(data));
       }
     } catch (error) {
+      clearTimeout(timeoutId);
+      console.error('Erro ao carregar clientes:', error);
+
+      // Fallback to localStorage em caso de erro
+      const savedClients = localStorage.getItem('nail-clients');
+      if (savedClients) {
+        try {
+          dispatch({ type: 'SET_CLIENTS', clients: JSON.parse(savedClients) });
+        } catch (e) {
+          dispatch({ type: 'SET_CLIENTS', clients: [] });
+        }
+      } else {
+        dispatch({ type: 'SET_CLIENTS', clients: [] });
+      }
       dispatch({ type: 'SET_ERROR', entity: 'clients', error: (error as Error).message });
     } finally {
       dispatch({ type: 'SET_LOADING', entity: 'clients', loading: false });
@@ -171,26 +209,72 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const refreshAppointments = async () => {
     dispatch({ type: 'SET_LOADING', entity: 'appointments', loading: true });
     dispatch({ type: 'SET_ERROR', entity: 'appointments', error: null });
-    try {
-      const { data, error } = await appointmentService.getAppointments();
-      if (error) {
-        // Fallback to localStorage
-        const savedAppointments = localStorage.getItem('nail-appointments');
-        if (savedAppointments) {
+
+    // Timeout para evitar carregamento infinito
+    const timeoutId = setTimeout(() => {
+      console.warn('Timeout ao carregar agendamentos, usando fallback');
+      const savedAppointments = localStorage.getItem('nail-appointments');
+      if (savedAppointments) {
+        try {
           const parsedAppointments = JSON.parse(savedAppointments).map((app: any) => ({
             ...app,
             date: new Date(app.date),
           }));
           dispatch({ type: 'SET_APPOINTMENTS', appointments: parsedAppointments });
-        } else {
-          throw new Error(error);
+        } catch (e) {
+          dispatch({ type: 'SET_APPOINTMENTS', appointments: [] });
         }
+      } else {
+        dispatch({ type: 'SET_APPOINTMENTS', appointments: [] });
+      }
+      dispatch({ type: 'SET_LOADING', entity: 'appointments', loading: false });
+    }, 10000); // 10 segundos timeout
+
+    try {
+      const { data, error } = await appointmentService.getAppointments();
+      clearTimeout(timeoutId);
+
+      if (error) {
+        // Fallback to localStorage
+        const savedAppointments = localStorage.getItem('nail-appointments');
+        if (savedAppointments) {
+          try {
+            const parsedAppointments = JSON.parse(savedAppointments).map((app: any) => ({
+              ...app,
+              date: new Date(app.date),
+            }));
+            dispatch({ type: 'SET_APPOINTMENTS', appointments: parsedAppointments });
+          } catch (e) {
+            dispatch({ type: 'SET_APPOINTMENTS', appointments: [] });
+          }
+        } else {
+          dispatch({ type: 'SET_APPOINTMENTS', appointments: [] });
+        }
+        dispatch({ type: 'SET_ERROR', entity: 'appointments', error: error });
       } else {
         dispatch({ type: 'SET_APPOINTMENTS', appointments: data });
         // Sync to localStorage
         localStorage.setItem('nail-appointments', JSON.stringify(data));
       }
     } catch (error) {
+      clearTimeout(timeoutId);
+      console.error('Erro ao carregar agendamentos:', error);
+
+      // Fallback to localStorage em caso de erro
+      const savedAppointments = localStorage.getItem('nail-appointments');
+      if (savedAppointments) {
+        try {
+          const parsedAppointments = JSON.parse(savedAppointments).map((app: any) => ({
+            ...app,
+            date: new Date(app.date),
+          }));
+          dispatch({ type: 'SET_APPOINTMENTS', appointments: parsedAppointments });
+        } catch (e) {
+          dispatch({ type: 'SET_APPOINTMENTS', appointments: [] });
+        }
+      } else {
+        dispatch({ type: 'SET_APPOINTMENTS', appointments: [] });
+      }
       dispatch({ type: 'SET_ERROR', entity: 'appointments', error: (error as Error).message });
     } finally {
       dispatch({ type: 'SET_LOADING', entity: 'appointments', loading: false });
@@ -200,14 +284,28 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const refreshTransactions = async () => {
     dispatch({ type: 'SET_LOADING', entity: 'transactions', loading: true });
     dispatch({ type: 'SET_ERROR', entity: 'transactions', error: null });
+
+    // Timeout para evitar carregamento infinito
+    const timeoutId = setTimeout(() => {
+      console.warn('Timeout ao carregar transações, usando fallback');
+      dispatch({ type: 'SET_TRANSACTIONS', transactions: [] });
+      dispatch({ type: 'SET_LOADING', entity: 'transactions', loading: false });
+    }, 10000); // 10 segundos timeout
+
     try {
       const { data, error } = await financialService.getTransactions();
+      clearTimeout(timeoutId);
+
       if (error) {
-        throw new Error(error);
+        dispatch({ type: 'SET_TRANSACTIONS', transactions: [] });
+        dispatch({ type: 'SET_ERROR', entity: 'transactions', error: error });
       } else {
         dispatch({ type: 'SET_TRANSACTIONS', transactions: data });
       }
     } catch (error) {
+      clearTimeout(timeoutId);
+      console.error('Erro ao carregar transações:', error);
+      dispatch({ type: 'SET_TRANSACTIONS', transactions: [] });
       dispatch({ type: 'SET_ERROR', entity: 'transactions', error: (error as Error).message });
     } finally {
       dispatch({ type: 'SET_LOADING', entity: 'transactions', loading: false });
@@ -217,14 +315,28 @@ export const AppStateProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const refreshExpenses = async () => {
     dispatch({ type: 'SET_LOADING', entity: 'expenses', loading: true });
     dispatch({ type: 'SET_ERROR', entity: 'expenses', error: null });
+
+    // Timeout para evitar carregamento infinito
+    const timeoutId = setTimeout(() => {
+      console.warn('Timeout ao carregar despesas, usando fallback');
+      dispatch({ type: 'SET_EXPENSES', expenses: [] });
+      dispatch({ type: 'SET_LOADING', entity: 'expenses', loading: false });
+    }, 10000); // 10 segundos timeout
+
     try {
       const { data, error } = await expenseService.getExpenses();
+      clearTimeout(timeoutId);
+
       if (error) {
-        throw new Error(error);
+        dispatch({ type: 'SET_EXPENSES', expenses: [] });
+        dispatch({ type: 'SET_ERROR', entity: 'expenses', error: error });
       } else {
         dispatch({ type: 'SET_EXPENSES', expenses: data });
       }
     } catch (error) {
+      clearTimeout(timeoutId);
+      console.error('Erro ao carregar despesas:', error);
+      dispatch({ type: 'SET_EXPENSES', expenses: [] });
       dispatch({ type: 'SET_ERROR', entity: 'expenses', error: (error as Error).message });
     } finally {
       dispatch({ type: 'SET_LOADING', entity: 'expenses', loading: false });
