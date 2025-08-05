@@ -153,7 +153,7 @@ const CustomerPortalSettings: React.FC = () => {
 
   const getPortalUrl = () => {
     if (!watchedSlug) return '';
-    return `${window.location.origin}/cliente/login`;
+    return `${window.location.origin}/${watchedSlug}/cliente/login`;
   };
 
   const getSchedulingUrl = () => {

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Calendar, Users, LayoutDashboard, Share, LogOut, DollarSign, Settings, Loader2 } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useMediaQuery } from '@/hooks/use-media-query';
@@ -27,6 +27,7 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const location = useLocation();
   const isMobile = useMediaQuery('(max-width: 640px)');
+  const navigate = useNavigate();
   const { signOut, user } = useAuth();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
@@ -43,61 +44,19 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     return location.pathname === '/' ? '/' : `/${location.pathname.split('/')[1]}`;
   };
 
-  // Fixed logout with timeout and proper error handling
   const handleLogout = async () => {
     setIsLoggingOut(true);
-    
-    // Clear all local cache and data FIRST (immediate cleanup)
-    const keysToRemove = [
-      'gendar-user-cache',
-      'gendar-appointments-cache', 
-      'gendar-clients-cache',
-      'gendar-services-cache',
-      'nail-appointments', // Legacy localStorage
-      'nail-clients', // Legacy localStorage
-    ];
-    
-    keysToRemove.forEach(key => {
-      localStorage.removeItem(key);
-      sessionStorage.removeItem(key);
-    });
-    
-    // Clear any React Query cache
-    if (window.queryClient) {
-      window.queryClient.clear();
-    }
-    
-    // Show loading toast
-    toast.loading('Saindo da conta...', { id: 'logout-toast' });
-    
-    // Create timeout promise to avoid hanging
-    const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('Logout timeout')), 5000); // 5 second timeout
-    });
-    
     try {
-      // Race between logout and timeout
-      await Promise.race([
-        signOut(),
-        timeoutPromise
-      ]);
-      
-      // Success feedback (remove loading toast)
-      toast.dismiss('logout-toast');
+      await signOut();
+      navigate('/login');
       toast.success('Logout realizado com sucesso!');
-      
     } catch (error) {
       console.error('Logout error:', error);
-      toast.dismiss('logout-toast');
       toast.info('Você foi desconectado');
+      navigate('/login');
+    } finally {
+      setIsLoggingOut(false);
     }
-    
-    // ALWAYS redirect regardless of success/failure
-    // Force immediate redirect to ensure user is logged out
-    setTimeout(() => {
-      setIsLoggingOut(false); // Reset state before redirect
-      window.location.href = '/login';
-    }, 500);
   };
 
   return (

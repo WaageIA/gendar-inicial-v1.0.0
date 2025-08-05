@@ -100,7 +100,7 @@ function AppRoutes() {
         <Route path="/agendar/:business_slug" element={<PublicScheduler />} />
         
         {/* Customer Routes */}
-        <Route path="/cliente/login" element={<LoginCliente />} />
+        <Route path="/:business_slug/cliente/login" element={<LoginCliente />} />
         <Route path="/cliente/cadastro" element={<CadastroCliente />} />
         <Route path="/cliente/minha-conta" element={
           <ProtectedCustomerRoute>
