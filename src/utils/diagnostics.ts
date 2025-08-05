@@ -1,4 +1,4 @@
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/integrations/supabase/client-enhanced';
 
 export const runDiagnostics = async () => {
   console.log('🔍 Executando diagnósticos do sistema...');

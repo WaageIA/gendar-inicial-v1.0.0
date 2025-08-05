@@ -1,5 +1,5 @@
 
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/integrations/supabase/client-enhanced';
 import { Notification, NotificationType, NotificationStatus } from '@/types';
 import { toast } from 'sonner';
 

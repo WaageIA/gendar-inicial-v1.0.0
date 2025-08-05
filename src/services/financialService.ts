@@ -1,5 +1,5 @@
 
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/integrations/supabase/client-enhanced';
 import { FinancialTransaction, TransactionType, PaymentMethod } from '@/types';
 import { toast } from 'sonner';
 

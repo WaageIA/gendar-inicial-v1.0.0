@@ -1,4 +1,4 @@
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/integrations/supabase/client-enhanced';
 import { CustomerPortalSettings, CreateCustomerPortalSettings } from '@/types';
 import { toast } from 'sonner';
 

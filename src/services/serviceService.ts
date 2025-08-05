@@ -1,4 +1,4 @@
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/integrations/supabase/client-enhanced';
 import { Service, AvailableSlot } from '@/types';
 import { format, addMinutes, isBefore, isAfter, isSameDay } from 'date-fns';
 

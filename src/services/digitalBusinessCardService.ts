@@ -1,5 +1,5 @@
 import { DigitalBusinessCard } from '@/types';
-import { supabase } from '@/integrations/supabase/client'; // Assumindo que você usa Supabase
+import { supabase } from '@/integrations/supabase/client-enhanced';
 
 const TABLE_NAME = 'digital_business_cards'; // Nome da tabela no Supabase
 

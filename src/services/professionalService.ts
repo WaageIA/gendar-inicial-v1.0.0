@@ -1,4 +1,4 @@
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/integrations/supabase/client-enhanced';
 import { Professional, CreateProfessionalData } from '@/types';
 
 export const professionalService = {

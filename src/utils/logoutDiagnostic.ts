@@ -1,4 +1,4 @@
-import { supabase } from '@/integrations/supabase/client';
+import { supabase } from '@/integrations/supabase/client-enhanced';
 
 export const runLogoutDiagnostic = async () => {
   console.log('🔍 DIAGNÓSTICO DE LOGOUT - INICIANDO...');
