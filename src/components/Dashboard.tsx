@@ -65,19 +65,19 @@ const Dashboard: React.FC = () => {
     setAppointmentDialogOpen(true);
   };
 
-  const handleCancelAppointment = async (appointment: any) => {
+  const handleCancelAppointment = async (appointment: Appointment) => {
     console.log('[Dashboard] Cancelando agendamento:', appointment.id);
     await changeAppointmentStatus(appointment, 'cancelled');
     await refreshAppointments();
   };
 
-  const handleCompleteAppointment = async (appointment: any) => {
+  const handleCompleteAppointment = async (appointment: Appointment) => {
     console.log('[Dashboard] Concluindo agendamento:', appointment.id);
     await changeAppointmentStatus(appointment, 'completed');
     await refreshAppointments();
   };
 
-  const handleSaveAppointment = async (appointmentData: any) => {
+  const handleSaveAppointment = async (appointmentData: Omit<Appointment, 'id'>) => {
     console.log('[Dashboard] Salvando novo agendamento:', appointmentData);
     
     try {

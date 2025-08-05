@@ -116,7 +116,7 @@ const AppointmentDialog: React.FC<AppointmentDialogProps> = ({
     }
   };
 
-  const updateFormData = (field: keyof typeof formData, value: any) => {
+  const updateFormData = (field: keyof typeof formData, value: string | number) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     // Clear error when user starts typing
     if (errors[field]) {

@@ -134,7 +134,7 @@ const ClientForm: React.FC<ClientFormProps> = ({
     setIsDeleteDialogOpen(true);
   };
 
-  const updateFormData = (field: keyof ClientFormData, value: any) => {
+  const updateFormData = (field: keyof ClientFormData, value: string | number) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     // Clear error when user starts typing
     if (errors[field]) {
