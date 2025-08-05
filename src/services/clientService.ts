@@ -16,6 +16,7 @@ export const clientService = {
       const { data, error } = await supabase
         .from('clients')
         .select('*')
+        .eq('user_id', userData.user.id) // SECURITY FIX: Filter by user_id
         .order('created_at', { ascending: false });
 
       if (error) {

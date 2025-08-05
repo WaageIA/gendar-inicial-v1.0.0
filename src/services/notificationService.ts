@@ -14,6 +14,7 @@ export const notificationService = {
       const { data, error } = await supabase
         .from('notifications')
         .select('*')
+        .eq('user_id', userData.user.id) // SECURITY FIX: Filter by user_id
         .order('scheduled_for', { ascending: false });
 
       if (error) {

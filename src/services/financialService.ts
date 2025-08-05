@@ -14,6 +14,7 @@ export const financialService = {
       const { data, error } = await supabase
         .from('financial_transactions')
         .select('*')
+        .eq('user_id', userData.user.id) // SECURITY FIX: Filter by user_id
         .order('transaction_date', { ascending: false });
 
       if (error) {

@@ -8,8 +8,8 @@ import WhatsAppReminderDialog from '@/components/WhatsAppReminderDialog';
 import { Client, Appointment } from '@/types';
 import { useClients } from '@/hooks/useClients';
 import { useAppointments } from '@/hooks/use-appointments';
-import LoadingState from '@/components/common/LoadingState';
-import ErrorState from '@/components/common/ErrorState';
+import { LoadingState } from '@/components/common/LoadingState';
+import { ErrorState } from '@/components/common/ErrorState';
 import { toast } from 'sonner';
 const Clients = () => {
   const {

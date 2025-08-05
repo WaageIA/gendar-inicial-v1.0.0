@@ -30,9 +30,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setLoading(false);
 
         if (event === 'SIGNED_IN') {
-          toast.success('Login realizado com sucesso!');
+          // Toast handled by UI layer
+          console.log('User signed in:', currentSession?.user?.email);
         } else if (event === 'SIGNED_OUT') {
-          toast.info('Você saiu da sua conta');
+          // Toast handled by UI layer
+          console.log('User signed out');
         }
       }
     );

@@ -5,8 +5,8 @@ import Dashboard from '@/components/Dashboard';
 import { useAppState } from '@/contexts/AppStateContext';
 import { Appointment } from '@/types';
 import { toast } from 'sonner';
-import LoadingState from '@/components/common/LoadingState';
-import ErrorState from '@/components/common/ErrorState';
+import { LoadingState } from '@/components/common/LoadingState';
+import { ErrorState } from '@/components/common/ErrorState';
 
 const IndexPage = () => {
   const { state, dispatch } = useAppState();

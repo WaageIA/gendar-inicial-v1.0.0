@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Calendar, Users, LayoutDashboard, Share, LogOut, DollarSign, Settings } from 'lucide-react';
+import { Calendar, Users, LayoutDashboard, Share, LogOut, DollarSign, Settings, Loader2 } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useMediaQuery } from '@/hooks/use-media-query';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from './ui/button';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import MobileNavigation from './MobileNavigation';
 import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -16,6 +28,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const location = useLocation();
   const isMobile = useMediaQuery('(max-width: 640px)');
   const { signOut, user } = useAuth();
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const navigation = [
     { name: 'Dashboard', href: '/', icon: LayoutDashboard },
@@ -30,8 +43,61 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     return location.pathname === '/' ? '/' : `/${location.pathname.split('/')[1]}`;
   };
 
+  // Fixed logout with timeout and proper error handling
   const handleLogout = async () => {
-    await signOut();
+    setIsLoggingOut(true);
+    
+    // Clear all local cache and data FIRST (immediate cleanup)
+    const keysToRemove = [
+      'gendar-user-cache',
+      'gendar-appointments-cache', 
+      'gendar-clients-cache',
+      'gendar-services-cache',
+      'nail-appointments', // Legacy localStorage
+      'nail-clients', // Legacy localStorage
+    ];
+    
+    keysToRemove.forEach(key => {
+      localStorage.removeItem(key);
+      sessionStorage.removeItem(key);
+    });
+    
+    // Clear any React Query cache
+    if (window.queryClient) {
+      window.queryClient.clear();
+    }
+    
+    // Show loading toast
+    toast.loading('Saindo da conta...', { id: 'logout-toast' });
+    
+    // Create timeout promise to avoid hanging
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('Logout timeout')), 5000); // 5 second timeout
+    });
+    
+    try {
+      // Race between logout and timeout
+      await Promise.race([
+        signOut(),
+        timeoutPromise
+      ]);
+      
+      // Success feedback (remove loading toast)
+      toast.dismiss('logout-toast');
+      toast.success('Logout realizado com sucesso!');
+      
+    } catch (error) {
+      console.error('Logout error:', error);
+      toast.dismiss('logout-toast');
+      toast.info('Você foi desconectado');
+    }
+    
+    // ALWAYS redirect regardless of success/failure
+    // Force immediate redirect to ensure user is logged out
+    setTimeout(() => {
+      setIsLoggingOut(false); // Reset state before redirect
+      window.location.href = '/login';
+    }, 500);
   };
 
   return (
@@ -65,18 +131,76 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                   <Settings className={cn(isMobile ? "h-4 w-4" : "h-4 w-4")} />
                 </Button>
               </Link>
-              <Button 
-                variant="ghost" 
-                size={isMobile ? "sm" : "sm"}
-                onClick={handleLogout} 
-                className={cn(
-                  "text-gray-600 hover:text-red-600 flex-shrink-0",
-                  isMobile ? "p-2 h-8 w-8" : "px-3 py-2"
-                )}
-              >
-                <LogOut className={cn(isMobile ? "h-4 w-4" : "h-4 w-4 mr-1")} />
-                {!isMobile && <span>Sair</span>}
-              </Button>
+              {/* Enhanced Logout Button with Confirmation */}
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    size={isMobile ? "sm" : "sm"}
+                    disabled={isLoggingOut}
+                    className={cn(
+                      "text-gray-600 hover:text-red-600 flex-shrink-0 transition-all duration-200",
+                      isMobile ? "p-2 h-8 w-8" : "px-3 py-2",
+                      isLoggingOut && "opacity-50 cursor-not-allowed"
+                    )}
+                  >
+                    {isLoggingOut ? (
+                      <Loader2 className={cn(
+                        "animate-spin",
+                        isMobile ? "h-4 w-4" : "h-4 w-4 mr-1"
+                      )} />
+                    ) : (
+                      <LogOut className={cn(
+                        "transition-transform duration-200 hover:scale-110",
+                        isMobile ? "h-4 w-4" : "h-4 w-4 mr-1"
+                      )} />
+                    )}
+                    {!isMobile && (
+                      <span className="transition-opacity duration-200">
+                        {isLoggingOut ? "Saindo..." : "Sair"}
+                      </span>
+                    )}
+                  </Button>
+                </AlertDialogTrigger>
+                
+                <AlertDialogContent className="max-w-md">
+                  <AlertDialogHeader>
+                    <AlertDialogTitle className="flex items-center gap-2">
+                      <LogOut className="h-5 w-5 text-red-500" />
+                      Confirmar Logout
+                    </AlertDialogTitle>
+                    <AlertDialogDescription className="text-gray-600">
+                      Tem certeza que deseja sair da sua conta? Você precisará fazer login novamente para acessar o sistema.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  
+                  <AlertDialogFooter className="gap-2">
+                    <AlertDialogCancel 
+                      disabled={isLoggingOut}
+                      className="transition-all duration-200 hover:bg-gray-100"
+                    >
+                      Cancelar
+                    </AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleLogout}
+                      disabled={isLoggingOut}
+                      className="bg-red-600 hover:bg-red-700 transition-all duration-200 disabled:opacity-50"
+                    >
+                      {isLoggingOut ? (
+                        <>
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          Saindo...
+                        </>
+                      ) : (
+                        <>
+                          <LogOut className="h-4 w-4 mr-2" />
+                          Sim, sair
+                        </>
+                      )}
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             </div>
           )}
         </div>

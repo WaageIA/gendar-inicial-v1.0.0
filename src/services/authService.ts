@@ -54,18 +54,17 @@ export const authService = {
     }
   },
 
-  // Logout
+  // Logout (without toast - handled by UI layer)
   async signOut() {
     try {
       const { error } = await supabase.auth.signOut();
       if (error) {
-        toast.error(error.message);
+        console.error('Supabase signOut error:', error);
         return { error };
       }
-      toast.success('Logout realizado com sucesso!');
       return { error: null };
     } catch (error: any) {
-      toast.error('Erro ao fazer logout');
+      console.error('SignOut service error:', error);
       return { error };
     }
   },

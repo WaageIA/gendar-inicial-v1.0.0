@@ -16,6 +16,7 @@ export const appointmentService = {
       const { data, error } = await supabase
         .from('appointments')
         .select('*')
+        .eq('user_id', userData.user.id) // SECURITY FIX: Filter by user_id
         .order('date', { ascending: true });
 
       if (error) {

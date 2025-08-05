@@ -1,6 +1,6 @@
 
 import React, { Component, ErrorInfo, ReactNode } from 'react';
-import ErrorState from '@/components/common/ErrorState';
+import { ErrorState } from '@/components/common/ErrorState';
 
 interface Props {
   children: ReactNode;

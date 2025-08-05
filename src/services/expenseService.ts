@@ -14,6 +14,7 @@ export const expenseService = {
       const { data, error } = await supabase
         .from('expenses')
         .select('*')
+        .eq('user_id', userData.user.id) // SECURITY FIX: Filter by user_id
         .order('expense_date', { ascending: false });
 
       if (error) {

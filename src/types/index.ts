@@ -1,20 +1,33 @@
-import { Appointment } from './appointment';
-import { Client } from './client';
-import { Expense } from './expense';
-import { FinancialTransaction } from './financial';
-import { Service } from './service';
-import { User } from './user';
+import { Appointment, AppointmentStatus, CreateAppointmentData, AvailableSlot } from './appointment';
+import { Client, LoyaltyLevel, CreateClientData } from './client';
+import { Customer, CustomerData, CreateCustomerData } from './customer';
+import { Professional, CreateProfessionalData } from './professional';
+import { Service, ServiceOffering } from './service';
+import { CustomerPortalSettings, CreateCustomerPortalSettings } from './customerPortal';
 
-export type { Appointment, Client, Expense, FinancialTransaction, Service, User };
+// Re-export all types
+export type { 
+  Appointment, 
+  AppointmentStatus, 
+  CreateAppointmentData, 
+  AvailableSlot,
+  Client, 
+  LoyaltyLevel, 
+  CreateClientData,
+  Customer,
+  CustomerData,
+  CreateCustomerData,
+  Professional,
+  CreateProfessionalData,
+  Service, 
+  ServiceOffering,
+  CustomerPortalSettings,
+  CreateCustomerPortalSettings
+};
 
 export type SocialMediaLink = {
   platform: string; // Ex: 'instagram', 'facebook', 'whatsapp'
   url: string;
-};
-
-export type ServiceOffering = {
-  name: string;
-  description?: string;
 };
 
 export type ContactInfo = {
